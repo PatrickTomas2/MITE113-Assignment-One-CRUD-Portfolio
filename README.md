@@ -165,4 +165,4 @@ Patrick John S. Tomas
 
 MITE113 - Web-Based Programming
 
-# Note: AI assisted in front-end only.
+### Note: AI assisted in front-end only.
