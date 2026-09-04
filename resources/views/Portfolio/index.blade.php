@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Portfolio</title>
 </head>
 <body>
-    <h1>MITE113 Assignment One CRUD Portfolio</h1>
-    <button><a href="/portfolio">View my Portfolio</a></button>
+    <h1>My Portfolio</h1>
+    
 </body>
 </html>
