@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PersonalInformation;
+use App\Models\Skills;
 
 class PersonalInfomationController extends Controller
 {
@@ -14,6 +15,7 @@ class PersonalInfomationController extends Controller
     {
         return view('Portfolio.index', [
             'personalInformation' => PersonalInformation::all(),
+            'skills' => Skills::all(),
         ]);
     }
 

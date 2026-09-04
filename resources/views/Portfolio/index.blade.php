@@ -29,5 +29,40 @@
             <li>No personal information available.</li>
         @endforelse
     </ul>
+
+    <hr>
+    <h2>Skills</h2>
+    <a href="{{ route('portfolio.skills.create') }}">Add Skills</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Skill Name</th>
+                <th>Skill Category</th>
+                <th>Proficiency Level</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($skills as $skill)
+                <tr>
+                    <td>{{ $skill->skill_name }}</td>
+                    <td>{{ $skill->skill_category }}</td>
+                    <td>{{ $skill->proficiency_level }}</td>
+                    <td>
+                        <a href="{{ route('portfolio.skills.edit', $skill->id) }}">Edit</a>
+                        <form action="{{ route('portfolio.skills.destroy', $skill->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this skill?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4">No skills available.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 </body>
 </html>
