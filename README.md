@@ -1,4 +1,3 @@
-    ````markdown
 # MITE113 Assignment One - CRUD Portfolio
 
 A simple portfolio management system developed using Laravel and Tailwind CSS.
@@ -162,9 +161,8 @@ This project was created as part of **MITE113 Assignment One** to demonstrate th
 
 ## Author
 
-Your Name
+Patrick John S. Tomas
 
-MITE113
+MITE113 - Web-Based Programming
 
-```
-```
+# Note: AI assisted in front-end only.
