@@ -3,49 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Skill</title>
+    <title>Edit User</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-white text-black min-h-screen">
 
-    <!-- Header -->
     <header class="border-b border-gray-200">
         <div class="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
             <h1 class="text-lg font-bold tracking-wide">
                 MY PORTFOLIO
             </h1>
 
-            <a href="{{ url()->previous() }}"
+            <a href="{{ route('portfolio.users.index') }}"
                class="text-sm text-gray-600 hover:text-black transition">
                 ← Back
             </a>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-6 py-12">
 
-        <!-- Page Header -->
         <div class="mb-8">
             <p class="text-sm text-gray-500 uppercase tracking-widest mb-2">
-                Skills
+                Users
             </p>
 
             <h2 class="text-3xl font-bold">
-                Edit Skill
+                Edit User
             </h2>
 
             <p class="text-gray-500 mt-2">
-                Update the information for this skill.
+                Update the information for this user. Leave the password blank to keep the current one.
             </p>
         </div>
 
-        <!-- Form Card -->
         <div class="border border-gray-200 rounded-xl p-8">
 
-            <form action="{{ route('portfolio.skills.update', $skill->id) }}"
+            <form action="{{ route('portfolio.users.update', $user->id) }}"
                   method="POST"
                   class="space-y-6">
 
@@ -53,139 +49,98 @@
                 @method('PUT')
 
                 <div>
-                    <label for="user_id"
+                    <label for="name"
                            class="block text-sm font-semibold mb-2">
-                        User
-                    </label>
-
-                    <select
-                        name="user_id"
-                        id="user_id"
-                        required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg
-                               bg-white
-                               focus:outline-none focus:ring-2 focus:ring-black
-                               focus:border-black transition"
-                    >
-                        <option value="">Select user</option>
-
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}"
-                                {{ old('user_id', $skill->user_id) == $user->id ? 'selected' : '' }}>
-                                {{ $user->name }}
-                            </option>
-                        @endforeach
-                    </select>
-
-                    @error('user_id')
-                        <p class="text-sm text-red-600 mt-1">
-                            {{ $message }}
-                        </p>
-                    @enderror
-                </div>
-
-                <!-- Skill Name -->
-                <div>
-                    <label for="skill_name"
-                           class="block text-sm font-semibold mb-2">
-                        Skill Name
+                        Name
                     </label>
 
                     <input
                         type="text"
-                        name="skill_name"
-                        id="skill_name"
-                        value="{{ old('skill_name', $skill->skill_name) }}"
+                        name="name"
+                        id="name"
+                        value="{{ old('name', $user->name) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-black
                                focus:border-black transition"
-                        placeholder="e.g. JavaScript"
+                        placeholder="e.g. Juan Dela Cruz"
                     >
 
-                    @error('skill_name')
+                    @error('name')
                         <p class="text-sm text-red-600 mt-1">
                             {{ $message }}
                         </p>
                     @enderror
                 </div>
 
-                <!-- Skill Category -->
                 <div>
-                    <label for="skill_category"
+                    <label for="email"
                            class="block text-sm font-semibold mb-2">
-                        Skill Category
+                        Email
                     </label>
 
                     <input
-                        type="text"
-                        name="skill_category"
-                        id="skill_category"
-                        value="{{ old('skill_category', $skill->skill_category) }}"
+                        type="email"
+                        name="email"
+                        id="email"
+                        value="{{ old('email', $user->email) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-black
                                focus:border-black transition"
-                        placeholder="e.g. Programming Language"
+                        placeholder="e.g. juan@example.com"
                     >
 
-                    @error('skill_category')
+                    @error('email')
                         <p class="text-sm text-red-600 mt-1">
                             {{ $message }}
                         </p>
                     @enderror
                 </div>
 
-                <!-- Proficiency Level -->
                 <div>
-                    <label for="proficiency_level"
+                    <label for="password"
                            class="block text-sm font-semibold mb-2">
-                        Proficiency Level
+                        Password
                     </label>
 
-                    <select
-                        name="proficiency_level"
-                        id="proficiency_level"
-                        required
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg
-                               bg-white
                                focus:outline-none focus:ring-2 focus:ring-black
                                focus:border-black transition"
+                        placeholder="At least 8 characters"
                     >
-                        <option value="">Select proficiency level</option>
 
-                        <option value="Beginner"
-                            {{ old('proficiency_level', $skill->proficiency_level) == 'Beginner' ? 'selected' : '' }}>
-                            Beginner
-                        </option>
-
-                        <option value="Intermediate"
-                            {{ old('proficiency_level', $skill->proficiency_level) == 'Intermediate' ? 'selected' : '' }}>
-                            Intermediate
-                        </option>
-
-                        <option value="Advanced"
-                            {{ old('proficiency_level', $skill->proficiency_level) == 'Advanced' ? 'selected' : '' }}>
-                            Advanced
-                        </option>
-
-                        <option value="Expert"
-                            {{ old('proficiency_level', $skill->proficiency_level) == 'Expert' ? 'selected' : '' }}>
-                            Expert
-                        </option>
-                    </select>
-
-                    @error('proficiency_level')
+                    @error('password')
                         <p class="text-sm text-red-600 mt-1">
                             {{ $message }}
                         </p>
                     @enderror
                 </div>
 
-                <!-- Buttons -->
+                <div>
+                    <label for="password_confirmation"
+                           class="block text-sm font-semibold mb-2">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password_confirmation"
+                        id="password_confirmation"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                               focus:outline-none focus:ring-2 focus:ring-black
+                               focus:border-black transition"
+                        placeholder="Re-enter password"
+                    >
+                </div>
+
                 <div class="pt-4 flex items-center justify-end gap-3">
 
-                    <a href="{{ url()->previous() }}"
+                    <a href="{{ route('portfolio.users.index') }}"
                        class="px-5 py-3 border border-gray-300 rounded-lg
                               text-sm font-medium
                               hover:border-black hover:bg-gray-50
@@ -198,7 +153,7 @@
                         class="px-5 py-3 bg-black text-white rounded-lg
                                text-sm font-medium
                                hover:bg-gray-800 transition">
-                        Update Skill
+                        Update User
                     </button>
 
                 </div>
@@ -206,13 +161,7 @@
             </form>
         </div>
 
-        <!-- Footer Note -->
-        <p class="text-sm text-gray-400 mt-6">
-            Make sure the skill information is accurate before updating.
-        </p>
-
     </main>
 
 </body>
 </html>
-```

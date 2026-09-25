@@ -11,6 +11,9 @@ Route::get('/portfolio', [App\Http\Controllers\PersonalInfomationController::cla
 
 Route::get('/portfolio/personal-information/create', [App\Http\Controllers\PersonalInfomationController::class, 'create'])->name('portfolio.personal-information.create');
 Route::post('/portfolio/personal-information', [App\Http\Controllers\PersonalInfomationController::class, 'store'])->name('portfolio.personal-information.store');
+Route::get('/portfolio/personal-information/{personalInformation}/edit', [App\Http\Controllers\PersonalInfomationController::class, 'edit'])->name('portfolio.personal-information.edit');
+Route::put('/portfolio/personal-information/{personalInformation}', [App\Http\Controllers\PersonalInfomationController::class, 'update'])->name('portfolio.personal-information.update');
+Route::delete('/portfolio/personal-information/{personalInformation}', [App\Http\Controllers\PersonalInfomationController::class, 'destroy'])->name('portfolio.personal-information.destroy');
 
 Route::get('/portfolio/skills/create', [App\Http\Controllers\SkillsController::class, 'create'])->name('portfolio.skills.create');
 Route::post('/portfolio/skills', [App\Http\Controllers\SkillsController::class, 'store'])->name('portfolio.skills.store');
@@ -30,3 +33,11 @@ Route::get('/portfolio/education/{education}/edit', [App\Http\Controllers\Educat
 Route::put('/portfolio/education/{education}', [App\Http\Controllers\EducationController::class, 'update'])->name('portfolio.educations.update');
 Route::delete('/portfolio/education/{education}', [App\Http\Controllers\EducationController::class, 'destroy'])->name('portfolio.educations.destroy');
 
+
+Route::get('/portfolio/users', [App\Http\Controllers\UserController::class, 'index'])->name('portfolio.users.index');
+Route::get('/portfolio/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('portfolio.users.create');
+Route::post('/portfolio/users', [App\Http\Controllers\UserController::class, 'store'])->name('portfolio.users.store');
+Route::get('/portfolio/users/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('portfolio.users.show');
+Route::get('/portfolio/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('portfolio.users.edit');
+Route::put('/portfolio/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('portfolio.users.update');
+Route::delete('/portfolio/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('portfolio.users.destroy');

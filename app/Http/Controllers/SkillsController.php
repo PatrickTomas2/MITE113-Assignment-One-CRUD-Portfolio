@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Skills;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SkillsController extends Controller
@@ -20,7 +21,9 @@ class SkillsController extends Controller
      */
     public function create()
     {
-        return view('Portfolio.Skills.create');
+        return view('Portfolio.Skills.create', [
+            'users' => User::all(),
+        ]);
     }
 
     /**
@@ -29,6 +32,7 @@ class SkillsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
             'skill_name' => 'required|string|max:255',
             'skill_category' => 'required|string|max:255',
             'proficiency_level' => 'required|string|max:255',
@@ -53,6 +57,7 @@ class SkillsController extends Controller
     public function edit(Skills $skills)
     {
         return view('Portfolio.Skills.edit', [
+            'users' => User::all(),
             'skill' => $skills,
         ]);
     }
@@ -63,6 +68,7 @@ class SkillsController extends Controller
     public function update(Request $request, Skills $skills)
     {
         $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
             'skill_name' => 'required|string|max:255',
             'skill_category' => 'required|string|max:255',
             'proficiency_level' => 'required|string|max:255',

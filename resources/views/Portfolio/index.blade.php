@@ -54,6 +54,11 @@
                     Education
                 </a>
 
+                <a href="{{ route('portfolio.users.index') }}"
+                    class="font-medium text-gray-600 transition hover:text-black">
+                    Users
+                </a>
+
             </div>
 
         </div>
@@ -165,7 +170,61 @@
 
                 @forelse ($personalInformation as $info)
 
-                    <div class="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 {{ $loop->last ? '' : 'mb-8 border-b border-gray-200 pb-8' }}">
+
+                        <div class="flex items-start justify-between md:col-span-2">
+
+                            <div>
+
+                                <p class="text-xs font-semibold uppercase
+                                          tracking-widest text-gray-400">
+                                    User
+                                </p>
+
+                                <p class="mt-2 text-base font-medium">
+                                    {{ $info->user->name ?? 'Unassigned' }}
+                                </p>
+
+                            </div>
+
+                            <div class="whitespace-nowrap">
+
+                                <a href="{{ route('portfolio.personal-information.edit', $info->id) }}"
+                                    class="mr-2 inline-flex border
+                                           border-gray-300 px-3 py-2
+                                           text-xs font-medium
+                                           transition hover:bg-black
+                                           hover:text-white">
+
+                                    Edit
+
+                                </a>
+
+                                <form
+                                    action="{{ route('portfolio.personal-information.destroy', $info->id) }}"
+                                    method="POST"
+                                    class="inline">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                        onclick="return confirm('Are you sure you want to delete this personal information?')"
+                                        class="inline-flex border
+                                               border-gray-300 px-3 py-2
+                                               text-xs font-medium
+                                               transition hover:bg-black
+                                               hover:text-white">
+
+                                        Delete
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
 
                         <div>
 
@@ -335,6 +394,11 @@
 
                             <th class="px-6 py-4 text-xs font-semibold
                                        uppercase tracking-widest text-gray-500">
+                                User
+                            </th>
+
+                            <th class="px-6 py-4 text-xs font-semibold
+                                       uppercase tracking-widest text-gray-500">
                                 Skill
                             </th>
 
@@ -364,6 +428,10 @@
                         @forelse ($skills as $skill)
 
                             <tr class="transition hover:bg-gray-50">
+
+                                <td class="px-6 py-5 text-gray-600">
+                                    {{ $skill->user->name ?? 'Unassigned' }}
+                                </td>
 
                                 <td class="px-6 py-5 font-medium">
                                     {{ $skill->skill_name }}
@@ -436,7 +504,7 @@
 
                             <tr>
 
-                                <td colspan="4"
+                                <td colspan="5"
                                     class="px-6 py-14 text-center">
 
                                     <p class="font-medium">
@@ -517,6 +585,11 @@
 
                             <th class="px-6 py-4 text-xs font-semibold
                                        uppercase tracking-widest text-gray-500">
+                                User
+                            </th>
+
+                            <th class="px-6 py-4 text-xs font-semibold
+                                       uppercase tracking-widest text-gray-500">
                                 Project
                             </th>
 
@@ -551,6 +624,10 @@
                         @forelse ($projects as $project)
 
                             <tr class="transition hover:bg-gray-50">
+
+                                <td class="px-6 py-5 text-gray-600">
+                                    {{ $project->user->name ?? 'Unassigned' }}
+                                </td>
 
                                 <td class="px-6 py-5 font-medium">
                                     {{ $project->project_name }}
@@ -620,7 +697,7 @@
 
                             <tr>
 
-                                <td colspan="5"
+                                <td colspan="6"
                                     class="px-6 py-14 text-center">
 
                                     <p class="font-medium">
@@ -701,6 +778,11 @@
 
                             <th class="px-6 py-4 text-xs font-semibold
                                        uppercase tracking-widest text-gray-500">
+                                User
+                            </th>
+
+                            <th class="px-6 py-4 text-xs font-semibold
+                                       uppercase tracking-widest text-gray-500">
                                 School
                             </th>
 
@@ -740,6 +822,10 @@
                         @forelse ($education as $edu)
 
                             <tr class="transition hover:bg-gray-50">
+
+                                <td class="px-6 py-5 text-gray-600">
+                                    {{ $edu->user->name ?? 'Unassigned' }}
+                                </td>
 
                                 <td class="px-6 py-5 font-medium">
                                     {{ $edu->school_name }}
@@ -805,7 +891,7 @@
 
                             <tr>
 
-                                <td colspan="6"
+                                <td colspan="7"
                                     class="px-6 py-14 text-center">
 
                                     <p class="font-medium">

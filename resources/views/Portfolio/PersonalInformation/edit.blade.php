@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Edit Project</title>
+    <title>Edit Personal Information</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -34,15 +34,15 @@
         <div class="mb-8">
 
             <p class="text-sm text-gray-500 uppercase tracking-widest mb-2">
-                Projects
+                Personal Information
             </p>
 
             <h2 class="text-3xl font-bold">
-                Edit Project
+                Edit Personal Information
             </h2>
 
             <p class="text-gray-500 mt-2">
-                Update the information for this project.
+                Update your personal and professional information.
             </p>
 
         </div>
@@ -50,7 +50,7 @@
         <!-- Form Card -->
         <div class="border border-gray-200 rounded-xl p-8">
 
-            <form action="{{ route('portfolio.projects.update', $project->id) }}"
+            <form action="{{ route('portfolio.personal-information.update', $personalInformation->id) }}"
                   method="POST"
                   class="space-y-6">
 
@@ -76,7 +76,7 @@
 
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}"
-                                {{ old('user_id', $project->user_id) == $user->id ? 'selected' : '' }}>
+                                {{ old('user_id', $personalInformation->user_id) == $user->id ? 'selected' : '' }}>
                                 {{ $user->name }}
                             </option>
                         @endforeach
@@ -89,107 +89,155 @@
                     @enderror
                 </div>
 
-                <!-- Project Name -->
+                <!-- Name -->
                 <div>
-                    <label for="project_name"
+                    <label for="name"
                            class="block text-sm font-semibold mb-2">
-                        Project Name
+                        Name
                     </label>
 
                     <input
                         type="text"
-                        name="project_name"
-                        id="project_name"
-                        value="{{ old('project_name', $project->project_name) }}"
+                        name="name"
+                        id="name"
+                        value="{{ old('name', $personalInformation->name) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-black
                                focus:border-black transition"
-                        placeholder="e.g. Student Management System"
+                        placeholder="e.g. Juan Dela Cruz"
                     >
 
-                    @error('project_name')
+                    @error('name')
                         <p class="text-sm text-red-600 mt-1">
                             {{ $message }}
                         </p>
                     @enderror
                 </div>
 
-                <!-- Project Description -->
+                <!-- Email -->
                 <div>
-                    <label for="project_description"
+                    <label for="email"
                            class="block text-sm font-semibold mb-2">
-                        Project Description
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        value="{{ old('email', $personalInformation->email) }}"
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                               focus:outline-none focus:ring-2 focus:ring-black
+                               focus:border-black transition"
+                        placeholder="e.g. juan@example.com"
+                    >
+
+                    @error('email')
+                        <p class="text-sm text-red-600 mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+                <!-- Professional Title -->
+                <div>
+                    <label for="professional_title"
+                           class="block text-sm font-semibold mb-2">
+                        Professional Title
+                    </label>
+
+                    <input
+                        type="text"
+                        name="professional_title"
+                        id="professional_title"
+                        value="{{ old('professional_title', $personalInformation->professional_title) }}"
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                               focus:outline-none focus:ring-2 focus:ring-black
+                               focus:border-black transition"
+                        placeholder="e.g. Web Developer"
+                    >
+
+                    @error('professional_title')
+                        <p class="text-sm text-red-600 mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+                <!-- Short Introduction -->
+                <div>
+                    <label for="short_introduction"
+                           class="block text-sm font-semibold mb-2">
+                        Short Introduction
                     </label>
 
                     <textarea
-                        name="project_description"
-                        id="project_description"
+                        name="short_introduction"
+                        id="short_introduction"
                         rows="5"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-black
                                focus:border-black transition resize-none"
-                        placeholder="Describe your project..."
-                    >{{ old('project_description', $project->project_description) }}</textarea>
+                        placeholder="Write a short introduction about yourself..."
+                    >{{ old('short_introduction', $personalInformation->short_introduction) }}</textarea>
 
-                    @error('project_description')
+                    @error('short_introduction')
                         <p class="text-sm text-red-600 mt-1">
                             {{ $message }}
                         </p>
                     @enderror
                 </div>
 
-                <!-- Category -->
+                <!-- Phone Number -->
                 <div>
-                    <label for="category"
+                    <label for="phone_number"
                            class="block text-sm font-semibold mb-2">
-                        Category
+                        Phone Number
                     </label>
 
                     <input
                         type="text"
-                        name="category"
-                        id="category"
-                        value="{{ old('category', $project->category) }}"
+                        name="phone_number"
+                        id="phone_number"
+                        value="{{ old('phone_number', $personalInformation->phone_number) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-black
                                focus:border-black transition"
-                        placeholder="e.g. Web Application"
+                        placeholder="e.g. 09123456789"
                     >
 
-                    @error('category')
+                    @error('phone_number')
                         <p class="text-sm text-red-600 mt-1">
                             {{ $message }}
                         </p>
                     @enderror
                 </div>
 
-                <!-- Technologies Used -->
+                <!-- Address -->
                 <div>
-                    <label for="technologies_used"
+                    <label for="address"
                            class="block text-sm font-semibold mb-2">
-                        Technologies Used
+                        Address
                     </label>
 
                     <input
                         type="text"
-                        name="technologies_used"
-                        id="technologies_used"
-                        value="{{ old('technologies_used', $project->technologies_used) }}"
+                        name="address"
+                        id="address"
+                        value="{{ old('address', $personalInformation->address) }}"
                         required
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-black
                                focus:border-black transition"
-                        placeholder="e.g. Laravel, MySQL, Tailwind CSS"
+                        placeholder="e.g. Urdaneta City, Pangasinan"
                     >
 
-                    <p class="text-xs text-gray-400 mt-2">
-                        Separate multiple technologies with commas.
-                    </p>
-
-                    @error('technologies_used')
+                    @error('address')
                         <p class="text-sm text-red-600 mt-1">
                             {{ $message }}
                         </p>
@@ -212,7 +260,7 @@
                         class="px-5 py-3 bg-black text-white rounded-lg
                                text-sm font-medium
                                hover:bg-gray-800 transition">
-                        Update Project
+                        Update Information
                     </button>
 
                 </div>
@@ -223,7 +271,7 @@
 
         <!-- Footer Note -->
         <p class="text-sm text-gray-400 mt-6">
-            Make sure the project information is accurate before updating.
+            Make sure your personal information is accurate before updating.
         </p>
 
     </main>

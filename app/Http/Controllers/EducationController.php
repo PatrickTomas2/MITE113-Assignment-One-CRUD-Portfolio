@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Education;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EducationController extends Controller
@@ -20,7 +21,9 @@ class EducationController extends Controller
      */
     public function create()
     {
-        return view('Portfolio.Educations.create');
+        return view('Portfolio.Educations.create', [
+            'users' => User::all(),
+        ]);
     }
 
     /**
@@ -29,6 +32,7 @@ class EducationController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
             'school_name' => 'required|string|max:255',
             'degree' => 'required|string|max:255',
             'major' => 'required|string|max:255',
@@ -55,6 +59,7 @@ class EducationController extends Controller
     public function edit(Education $education)
     {
         return view('Portfolio.Educations.edit', [
+            'users' => User::all(),
             'education' => $education,
         ]);
     }
@@ -65,6 +70,7 @@ class EducationController extends Controller
     public function update(Request $request, Education $education)
     {
         $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
             'school_name' => 'required|string|max:255',
             'degree' => 'required|string|max:255',
             'major' => 'required|string|max:255',
