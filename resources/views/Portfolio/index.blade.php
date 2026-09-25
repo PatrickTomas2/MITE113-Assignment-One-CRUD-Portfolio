@@ -59,6 +59,19 @@
                     Users
                 </a>
 
+                @auth
+                    <form action="{{ route('logout') }}" method="POST">
+
+                        @csrf
+
+                        <button type="submit"
+                            class="font-medium text-gray-600 transition hover:text-black">
+                            Logout
+                        </button>
+
+                    </form>
+                @endauth
+
             </div>
 
         </div>

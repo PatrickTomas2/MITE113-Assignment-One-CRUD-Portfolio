@@ -7,7 +7,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/portfolio', [App\Http\Controllers\PersonalInfomationController::class, 'index'])->name('portfolio.index');
+Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login.store');
+Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+
+Route::get('/portfolio',[App\Http\Controllers\PersonalInfomationController::class, 'index'])->name('portfolio.index');
 
 Route::get('/portfolio/personal-information/create', [App\Http\Controllers\PersonalInfomationController::class, 'create'])->name('portfolio.personal-information.create');
 Route::post('/portfolio/personal-information', [App\Http\Controllers\PersonalInfomationController::class, 'store'])->name('portfolio.personal-information.store');
