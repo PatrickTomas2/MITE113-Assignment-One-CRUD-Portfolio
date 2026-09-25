@@ -164,38 +164,42 @@
 
                     <div class="whitespace-nowrap">
 
-                        <a href="{{ route('portfolio.personal-information.edit', $personalInformation->id) }}"
-                            class="mr-2 inline-flex border
-                                   border-gray-300 px-3 py-2
-                                   text-xs font-medium
-                                   transition hover:bg-black
-                                   hover:text-white">
-
-                            Edit
-
-                        </a>
-
-                        <form
-                            action="{{ route('portfolio.personal-information.destroy', $personalInformation->id) }}"
-                            method="POST"
-                            class="inline">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit"
-                                onclick="return confirm('Are you sure you want to delete this personal information?')"
-                                class="inline-flex border
+                        @can('update', $personalInformation)
+                            <a href="{{ route('portfolio.personal-information.edit', $personalInformation->id) }}"
+                                class="mr-2 inline-flex border
                                        border-gray-300 px-3 py-2
                                        text-xs font-medium
                                        transition hover:bg-black
                                        hover:text-white">
 
-                                Delete
+                                Edit
 
-                            </button>
+                            </a>
+                        @endcan
 
-                        </form>
+                        @can('delete', $personalInformation)
+                            <form
+                                action="{{ route('portfolio.personal-information.destroy', $personalInformation->id) }}"
+                                method="POST"
+                                class="inline">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                    onclick="return confirm('Are you sure you want to delete this personal information?')"
+                                    class="inline-flex border
+                                           border-gray-300 px-3 py-2
+                                           text-xs font-medium
+                                           transition hover:bg-black
+                                           hover:text-white">
+
+                                    Delete
+
+                                </button>
+
+                            </form>
+                        @endcan
 
                     </div>
 
@@ -450,39 +454,43 @@
 
                                 <td class="px-6 py-5 text-right">
 
-                                    <a href="{{ route('portfolio.skills.edit', $skill->id) }}"
-                                        class="mr-2 inline-flex border
-                                               border-gray-300 px-3 py-2
-                                               text-xs font-medium
-                                               transition hover:bg-black
-                                               hover:text-white">
-
-                                        Edit
-
-                                    </a>
-
-
-                                    <form
-                                        action="{{ route('portfolio.skills.destroy', $skill->id) }}"
-                                        method="POST"
-                                        class="inline">
-
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit"
-                                            onclick="return confirm('Are you sure you want to delete this skill?')"
-                                            class="inline-flex border
+                                    @can('update', $skill)
+                                        <a href="{{ route('portfolio.skills.edit', $skill->id) }}"
+                                            class="mr-2 inline-flex border
                                                    border-gray-300 px-3 py-2
                                                    text-xs font-medium
                                                    transition hover:bg-black
                                                    hover:text-white">
 
-                                            Delete
+                                            Edit
 
-                                        </button>
+                                        </a>
+                                    @endcan
 
-                                    </form>
+
+                                    @can('delete', $skill)
+                                        <form
+                                            action="{{ route('portfolio.skills.destroy', $skill->id) }}"
+                                            method="POST"
+                                            class="inline">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                onclick="return confirm('Are you sure you want to delete this skill?')"
+                                                class="inline-flex border
+                                                       border-gray-300 px-3 py-2
+                                                       text-xs font-medium
+                                                       transition hover:bg-black
+                                                       hover:text-white">
+
+                                                Delete
+
+                                            </button>
+
+                                        </form>
+                                    @endcan
 
                                 </td>
 
@@ -634,39 +642,43 @@
 
                                 <td class="whitespace-nowrap px-6 py-5 text-right">
 
-                                    <a href="{{ route('portfolio.projects.edit', $project->id) }}"
-                                        class="mr-2 inline-flex border
-                                               border-gray-300 px-3 py-2
-                                               text-xs font-medium
-                                               transition hover:bg-black
-                                               hover:text-white">
-
-                                        Edit
-
-                                    </a>
-
-
-                                    <form
-                                        action="{{ route('portfolio.projects.destroy', $project->id) }}"
-                                        method="POST"
-                                        class="inline">
-
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit"
-                                            onclick="return confirm('Are you sure you want to delete this project?')"
-                                            class="inline-flex border
+                                    @can('update', $project)
+                                        <a href="{{ route('portfolio.projects.edit', $project->id) }}"
+                                            class="mr-2 inline-flex border
                                                    border-gray-300 px-3 py-2
                                                    text-xs font-medium
                                                    transition hover:bg-black
                                                    hover:text-white">
 
-                                            Delete
+                                            Edit
 
-                                        </button>
+                                        </a>
+                                    @endcan
 
-                                    </form>
+
+                                    @can('delete', $project)
+                                        <form
+                                            action="{{ route('portfolio.projects.destroy', $project->id) }}"
+                                            method="POST"
+                                            class="inline">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                onclick="return confirm('Are you sure you want to delete this project?')"
+                                                class="inline-flex border
+                                                       border-gray-300 px-3 py-2
+                                                       text-xs font-medium
+                                                       transition hover:bg-black
+                                                       hover:text-white">
+
+                                                Delete
+
+                                            </button>
+
+                                        </form>
+                                    @endcan
 
                                 </td>
 
@@ -819,39 +831,43 @@
 
                                 <td class="whitespace-nowrap px-6 py-5 text-right">
 
-                                    <a href="{{ route('portfolio.educations.edit', $edu->id) }}"
-                                        class="mr-2 inline-flex border
-                                               border-gray-300 px-3 py-2
-                                               text-xs font-medium
-                                               transition hover:bg-black
-                                               hover:text-white">
-
-                                        Edit
-
-                                    </a>
-
-
-                                    <form
-                                        action="{{ route('portfolio.educations.destroy', $edu->id) }}"
-                                        method="POST"
-                                        class="inline">
-
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit"
-                                            onclick="return confirm('Are you sure you want to delete this education entry?')"
-                                            class="inline-flex border
+                                    @can('update', $edu)
+                                        <a href="{{ route('portfolio.educations.edit', $edu->id) }}"
+                                            class="mr-2 inline-flex border
                                                    border-gray-300 px-3 py-2
                                                    text-xs font-medium
                                                    transition hover:bg-black
                                                    hover:text-white">
 
-                                            Delete
+                                            Edit
 
-                                        </button>
+                                        </a>
+                                    @endcan
 
-                                    </form>
+
+                                    @can('delete', $edu)
+                                        <form
+                                            action="{{ route('portfolio.educations.destroy', $edu->id) }}"
+                                            method="POST"
+                                            class="inline">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                onclick="return confirm('Are you sure you want to delete this education entry?')"
+                                                class="inline-flex border
+                                                       border-gray-300 px-3 py-2
+                                                       text-xs font-medium
+                                                       transition hover:bg-black
+                                                       hover:text-white">
+
+                                                Delete
+
+                                            </button>
+
+                                        </form>
+                                    @endcan
 
                                 </td>
 
