@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Projects;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectsController extends Controller
 {
@@ -53,7 +54,7 @@ class ProjectsController extends Controller
      */
     public function edit(Projects $projects)
     {
-        abort_if($projects->user_id !== auth()->id(), 403);
+        Gate::authorize('update', $projects);
 
         return view('Portfolio.Projects.edit', [
             'project' => $projects,
@@ -65,7 +66,7 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Projects $projects)
     {
-        abort_if($projects->user_id !== auth()->id(), 403);
+        Gate::authorize('update', $projects);
 
         $validatedData = $request->validate([
             'project_name' => 'required|string|max:255',
@@ -84,7 +85,7 @@ class ProjectsController extends Controller
      */
     public function destroy(Projects $projects)
     {
-        abort_if($projects->user_id !== auth()->id(), 403);
+        Gate::authorize('delete', $projects);
 
         $projects->delete();
 

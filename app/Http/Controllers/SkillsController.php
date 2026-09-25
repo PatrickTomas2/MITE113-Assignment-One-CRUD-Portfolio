@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Skills;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SkillsController extends Controller
 {
@@ -52,7 +53,7 @@ class SkillsController extends Controller
      */
     public function edit(Skills $skills)
     {
-        abort_if($skills->user_id !== auth()->id(), 403);
+        Gate::authorize('update', $skills);
 
         return view('Portfolio.Skills.edit', [
             'skill' => $skills,
@@ -64,7 +65,7 @@ class SkillsController extends Controller
      */
     public function update(Request $request, Skills $skills)
     {
-        abort_if($skills->user_id !== auth()->id(), 403);
+        Gate::authorize('update', $skills);
 
         $validatedData = $request->validate([
             'skill_name' => 'required|string|max:255',
@@ -82,7 +83,7 @@ class SkillsController extends Controller
      */
     public function destroy(Skills $skills)
     {
-        abort_if($skills->user_id !== auth()->id(), 403);
+        Gate::authorize('delete', $skills);
 
         $skills->delete();
         return redirect()->route('portfolio.index')->with('success', 'Skill deleted successfully.');

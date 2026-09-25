@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Models\PersonalInformation;
 
 class PersonalInfomationController extends Controller
@@ -70,7 +71,7 @@ class PersonalInfomationController extends Controller
      */
     public function edit(PersonalInformation $personalInformation)
     {
-        abort_if($personalInformation->user_id !== auth()->id(), 403);
+        Gate::authorize('update', $personalInformation);
 
         return view('Portfolio.PersonalInformation.edit', [
             'personalInformation' => $personalInformation,
@@ -82,7 +83,7 @@ class PersonalInfomationController extends Controller
      */
     public function update(Request $request, PersonalInformation $personalInformation)
     {
-        abort_if($personalInformation->user_id !== auth()->id(), 403);
+        Gate::authorize('update', $personalInformation);
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -103,7 +104,7 @@ class PersonalInfomationController extends Controller
      */
     public function destroy(PersonalInformation $personalInformation)
     {
-        abort_if($personalInformation->user_id !== auth()->id(), 403);
+        Gate::authorize('delete', $personalInformation);
 
         $personalInformation->delete();
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Education;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class EducationController extends Controller
 {
@@ -54,7 +55,7 @@ class EducationController extends Controller
      */
     public function edit(Education $education)
     {
-        abort_if($education->user_id !== auth()->id(), 403);
+        Gate::authorize('update', $education);
 
         return view('Portfolio.Educations.edit', [
             'education' => $education,
@@ -66,7 +67,7 @@ class EducationController extends Controller
      */
     public function update(Request $request, Education $education)
     {
-        abort_if($education->user_id !== auth()->id(), 403);
+        Gate::authorize('update', $education);
 
         $validatedData = $request->validate([
             'school_name' => 'required|string|max:255',
@@ -86,7 +87,7 @@ class EducationController extends Controller
      */
     public function destroy(Education $education)
     {
-        abort_if($education->user_id !== auth()->id(), 403);
+        Gate::authorize('delete', $education);
 
         $education->delete();
 
