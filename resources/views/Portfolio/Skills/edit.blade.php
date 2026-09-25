@@ -52,38 +52,6 @@
                 @csrf
                 @method('PUT')
 
-                <div>
-                    <label for="user_id"
-                           class="block text-sm font-semibold mb-2">
-                        User
-                    </label>
-
-                    <select
-                        name="user_id"
-                        id="user_id"
-                        required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg
-                               bg-white
-                               focus:outline-none focus:ring-2 focus:ring-black
-                               focus:border-black transition"
-                    >
-                        <option value="">Select user</option>
-
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}"
-                                {{ old('user_id', $skill->user_id) == $user->id ? 'selected' : '' }}>
-                                {{ $user->name }}
-                            </option>
-                        @endforeach
-                    </select>
-
-                    @error('user_id')
-                        <p class="text-sm text-red-600 mt-1">
-                            {{ $message }}
-                        </p>
-                    @enderror
-                </div>
-
                 <!-- Skill Name -->
                 <div>
                     <label for="skill_name"

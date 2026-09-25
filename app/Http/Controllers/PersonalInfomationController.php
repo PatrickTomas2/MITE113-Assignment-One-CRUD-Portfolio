@@ -4,10 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PersonalInformation;
-use App\Models\Skills;
-use App\Models\Projects;
-use App\Models\Education;
-use App\Models\User;
 
 class PersonalInfomationController extends Controller
 {
@@ -16,11 +12,13 @@ class PersonalInfomationController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+
         return view('Portfolio.index', [
-            'personalInformation' => PersonalInformation::with('user')->get(),
-            'skills' => Skills::with('user')->get(),
-            'projects' => Projects::with('user')->get(),
-            'education' => Education::with('user')->get(),
+            'personalInformation' => $user->profile,
+            'skills' => $user->skills,
+            'projects' => $user->projects,
+            'education' => $user->education,
         ]);
     }
 
@@ -29,9 +27,11 @@ class PersonalInfomationController extends Controller
      */
     public function create()
     {
-        return view('Portfolio.PersonalInformation.create', [
-            'users' => User::doesntHave('profile')->get(),
-        ]);
+        if (auth()->user()->profile) {
+            return redirect()->route('portfolio.index');
+        }
+
+        return view('Portfolio.PersonalInformation.create');
     }
 
     /**
@@ -39,8 +39,11 @@ class PersonalInfomationController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->user()->profile) {
+            return redirect()->route('portfolio.index');
+        }
+
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id|unique:personal_information,user_id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'professional_title' => 'required|string|max:255',
@@ -49,7 +52,7 @@ class PersonalInfomationController extends Controller
             'address' => 'required|string|max:255',
         ]);
 
-        PersonalInformation::create($validatedData);
+        $request->user()->profile()->create($validatedData);
 
         return redirect()->route('portfolio.index')->with('success', 'Personal information created successfully.');
     }
@@ -67,9 +70,10 @@ class PersonalInfomationController extends Controller
      */
     public function edit(PersonalInformation $personalInformation)
     {
+        abort_if($personalInformation->user_id !== auth()->id(), 403);
+
         return view('Portfolio.PersonalInformation.edit', [
             'personalInformation' => $personalInformation,
-            'users' => User::doesntHave('profile')->orWhere('id', $personalInformation->user_id)->get(),
         ]);
     }
 
@@ -78,8 +82,9 @@ class PersonalInfomationController extends Controller
      */
     public function update(Request $request, PersonalInformation $personalInformation)
     {
+        abort_if($personalInformation->user_id !== auth()->id(), 403);
+
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id|unique:personal_information,user_id,' . $personalInformation->id,
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'professional_title' => 'required|string|max:255',
@@ -98,6 +103,8 @@ class PersonalInfomationController extends Controller
      */
     public function destroy(PersonalInformation $personalInformation)
     {
+        abort_if($personalInformation->user_id !== auth()->id(), 403);
+
         $personalInformation->delete();
 
         return redirect()->route('portfolio.index')->with('success', 'Personal information deleted successfully.');

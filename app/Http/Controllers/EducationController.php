@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Education;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class EducationController extends Controller
@@ -21,9 +20,7 @@ class EducationController extends Controller
      */
     public function create()
     {
-        return view('Portfolio.Educations.create', [
-            'users' => User::all(),
-        ]);
+        return view('Portfolio.Educations.create');
     }
 
     /**
@@ -32,7 +29,6 @@ class EducationController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'school_name' => 'required|string|max:255',
             'degree' => 'required|string|max:255',
             'major' => 'required|string|max:255',
@@ -40,7 +36,7 @@ class EducationController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
-        Education::create($validatedData);
+        $request->user()->education()->create($validatedData);
 
         return redirect()->route('portfolio.index')->with('success', 'Education created successfully.');
     }
@@ -58,8 +54,9 @@ class EducationController extends Controller
      */
     public function edit(Education $education)
     {
+        abort_if($education->user_id !== auth()->id(), 403);
+
         return view('Portfolio.Educations.edit', [
-            'users' => User::all(),
             'education' => $education,
         ]);
     }
@@ -69,8 +66,9 @@ class EducationController extends Controller
      */
     public function update(Request $request, Education $education)
     {
+        abort_if($education->user_id !== auth()->id(), 403);
+
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'school_name' => 'required|string|max:255',
             'degree' => 'required|string|max:255',
             'major' => 'required|string|max:255',
@@ -88,6 +86,8 @@ class EducationController extends Controller
      */
     public function destroy(Education $education)
     {
+        abort_if($education->user_id !== auth()->id(), 403);
+
         $education->delete();
 
         return redirect()->route('portfolio.index')->with('success', 'Education deleted successfully.');

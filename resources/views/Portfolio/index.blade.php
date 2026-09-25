@@ -54,11 +54,6 @@
                     Education
                 </a>
 
-                <a href="{{ route('portfolio.users.index') }}"
-                    class="font-medium text-gray-600 transition hover:text-black">
-                    Users
-                </a>
-
                 @auth
                     <form action="{{ route('logout') }}" method="POST">
 
@@ -95,7 +90,7 @@
             </h2>
 
             <p class="mt-3 max-w-2xl text-gray-500">
-                Manage the information displayed on your personal portfolio.
+                Welcome, {{ auth()->user()->name }}. Manage the information displayed on your personal portfolio.
             </p>
 
         </div>
@@ -165,15 +160,58 @@
                 </div>
 
 
-                <a href="{{ route('portfolio.personal-information.create') }}"
-                    class="inline-flex items-center justify-center
-                           bg-black px-5 py-2.5 text-sm font-medium
-                           text-white transition hover:bg-gray-800">
+                @if ($personalInformation)
 
-                    <span class="mr-2 text-lg">+</span>
-                    Add Information
+                    <div class="whitespace-nowrap">
 
-                </a>
+                        <a href="{{ route('portfolio.personal-information.edit', $personalInformation->id) }}"
+                            class="mr-2 inline-flex border
+                                   border-gray-300 px-3 py-2
+                                   text-xs font-medium
+                                   transition hover:bg-black
+                                   hover:text-white">
+
+                            Edit
+
+                        </a>
+
+                        <form
+                            action="{{ route('portfolio.personal-information.destroy', $personalInformation->id) }}"
+                            method="POST"
+                            class="inline">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                onclick="return confirm('Are you sure you want to delete this personal information?')"
+                                class="inline-flex border
+                                       border-gray-300 px-3 py-2
+                                       text-xs font-medium
+                                       transition hover:bg-black
+                                       hover:text-white">
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                @else
+
+                    <a href="{{ route('portfolio.personal-information.create') }}"
+                        class="inline-flex items-center justify-center
+                               bg-black px-5 py-2.5 text-sm font-medium
+                               text-white transition hover:bg-gray-800">
+
+                        <span class="mr-2 text-lg">+</span>
+                        Add Information
+
+                    </a>
+
+                @endif
 
             </div>
 
@@ -181,63 +219,9 @@
             {{-- SECTION CONTENT --}}
             <div class="p-6">
 
-                @forelse ($personalInformation as $info)
+                @if ($personalInformation)
 
-                    <div class="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 {{ $loop->last ? '' : 'mb-8 border-b border-gray-200 pb-8' }}">
-
-                        <div class="flex items-start justify-between md:col-span-2">
-
-                            <div>
-
-                                <p class="text-xs font-semibold uppercase
-                                          tracking-widest text-gray-400">
-                                    User
-                                </p>
-
-                                <p class="mt-2 text-base font-medium">
-                                    {{ $info->user->name ?? 'Unassigned' }}
-                                </p>
-
-                            </div>
-
-                            <div class="whitespace-nowrap">
-
-                                <a href="{{ route('portfolio.personal-information.edit', $info->id) }}"
-                                    class="mr-2 inline-flex border
-                                           border-gray-300 px-3 py-2
-                                           text-xs font-medium
-                                           transition hover:bg-black
-                                           hover:text-white">
-
-                                    Edit
-
-                                </a>
-
-                                <form
-                                    action="{{ route('portfolio.personal-information.destroy', $info->id) }}"
-                                    method="POST"
-                                    class="inline">
-
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit"
-                                        onclick="return confirm('Are you sure you want to delete this personal information?')"
-                                        class="inline-flex border
-                                               border-gray-300 px-3 py-2
-                                               text-xs font-medium
-                                               transition hover:bg-black
-                                               hover:text-white">
-
-                                        Delete
-
-                                    </button>
-
-                                </form>
-
-                            </div>
-
-                        </div>
+                    <div class="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2">
 
                         <div>
 
@@ -247,7 +231,7 @@
                             </p>
 
                             <p class="mt-2 text-base font-medium">
-                                {{ $info->name }}
+                                {{ $personalInformation->name }}
                             </p>
 
                         </div>
@@ -261,7 +245,7 @@
                             </p>
 
                             <p class="mt-2 text-base font-medium">
-                                {{ $info->professional_title }}
+                                {{ $personalInformation->professional_title }}
                             </p>
 
                         </div>
@@ -275,7 +259,7 @@
                             </p>
 
                             <p class="mt-2 text-base">
-                                {{ $info->email }}
+                                {{ $personalInformation->email }}
                             </p>
 
                         </div>
@@ -289,7 +273,7 @@
                             </p>
 
                             <p class="mt-2 text-base">
-                                {{ $info->phone_number }}
+                                {{ $personalInformation->phone_number }}
                             </p>
 
                         </div>
@@ -303,7 +287,7 @@
                             </p>
 
                             <p class="mt-2 text-base">
-                                {{ $info->address }}
+                                {{ $personalInformation->address }}
                             </p>
 
                         </div>
@@ -317,14 +301,14 @@
                             </p>
 
                             <p class="mt-2 max-w-4xl leading-7 text-gray-700">
-                                {{ $info->short_introduction }}
+                                {{ $personalInformation->short_introduction }}
                             </p>
 
                         </div>
 
                     </div>
 
-                @empty
+                @else
 
                     <div class="py-14 text-center">
 
@@ -345,7 +329,7 @@
 
                     </div>
 
-                @endforelse
+                @endif
 
             </div>
 
@@ -407,11 +391,6 @@
 
                             <th class="px-6 py-4 text-xs font-semibold
                                        uppercase tracking-widest text-gray-500">
-                                User
-                            </th>
-
-                            <th class="px-6 py-4 text-xs font-semibold
-                                       uppercase tracking-widest text-gray-500">
                                 Skill
                             </th>
 
@@ -441,10 +420,6 @@
                         @forelse ($skills as $skill)
 
                             <tr class="transition hover:bg-gray-50">
-
-                                <td class="px-6 py-5 text-gray-600">
-                                    {{ $skill->user->name ?? 'Unassigned' }}
-                                </td>
 
                                 <td class="px-6 py-5 font-medium">
                                     {{ $skill->skill_name }}
@@ -517,7 +492,7 @@
 
                             <tr>
 
-                                <td colspan="5"
+                                <td colspan="4"
                                     class="px-6 py-14 text-center">
 
                                     <p class="font-medium">
@@ -598,11 +573,6 @@
 
                             <th class="px-6 py-4 text-xs font-semibold
                                        uppercase tracking-widest text-gray-500">
-                                User
-                            </th>
-
-                            <th class="px-6 py-4 text-xs font-semibold
-                                       uppercase tracking-widest text-gray-500">
                                 Project
                             </th>
 
@@ -637,10 +607,6 @@
                         @forelse ($projects as $project)
 
                             <tr class="transition hover:bg-gray-50">
-
-                                <td class="px-6 py-5 text-gray-600">
-                                    {{ $project->user->name ?? 'Unassigned' }}
-                                </td>
 
                                 <td class="px-6 py-5 font-medium">
                                     {{ $project->project_name }}
@@ -710,7 +676,7 @@
 
                             <tr>
 
-                                <td colspan="6"
+                                <td colspan="5"
                                     class="px-6 py-14 text-center">
 
                                     <p class="font-medium">
@@ -791,11 +757,6 @@
 
                             <th class="px-6 py-4 text-xs font-semibold
                                        uppercase tracking-widest text-gray-500">
-                                User
-                            </th>
-
-                            <th class="px-6 py-4 text-xs font-semibold
-                                       uppercase tracking-widest text-gray-500">
                                 School
                             </th>
 
@@ -835,10 +796,6 @@
                         @forelse ($education as $edu)
 
                             <tr class="transition hover:bg-gray-50">
-
-                                <td class="px-6 py-5 text-gray-600">
-                                    {{ $edu->user->name ?? 'Unassigned' }}
-                                </td>
 
                                 <td class="px-6 py-5 font-medium">
                                     {{ $edu->school_name }}
@@ -904,7 +861,7 @@
 
                             <tr>
 
-                                <td colspan="7"
+                                <td colspan="6"
                                     class="px-6 py-14 text-center">
 
                                     <p class="font-medium">

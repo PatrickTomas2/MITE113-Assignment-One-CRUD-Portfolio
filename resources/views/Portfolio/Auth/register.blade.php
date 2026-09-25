@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add User</title>
+    <title>Register</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -15,33 +15,28 @@
             <h1 class="text-lg font-bold tracking-wide">
                 MY PORTFOLIO
             </h1>
-
-            <a href="{{ route('portfolio.users.index') }}"
-               class="text-sm text-gray-600 hover:text-black transition">
-                ← Back
-            </a>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-6 py-12">
+    <main class="max-w-md mx-auto px-6 py-12">
 
         <div class="mb-8">
             <p class="text-sm text-gray-500 uppercase tracking-widest mb-2">
-                Users
+                Account
             </p>
 
             <h2 class="text-3xl font-bold">
-                Add User
+                Register
             </h2>
 
             <p class="text-gray-500 mt-2">
-                Create a new user account.
+                Create an account to build your portfolio.
             </p>
         </div>
 
         <div class="border border-gray-200 rounded-xl p-8">
 
-            <form action="{{ route('portfolio.users.store') }}"
+            <form action="{{ route('register.store') }}"
                   method="POST"
                   class="space-y-6">
 
@@ -59,6 +54,7 @@
                         id="name"
                         value="{{ old('name') }}"
                         required
+                        autofocus
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-black
                                focus:border-black transition"
@@ -139,28 +135,25 @@
                     >
                 </div>
 
-                <div class="pt-4 flex items-center justify-end gap-3">
-
-                    <a href="{{ route('portfolio.users.index') }}"
-                       class="px-5 py-3 border border-gray-300 rounded-lg
-                              text-sm font-medium
-                              hover:border-black hover:bg-gray-50
-                              transition">
-                        Cancel
-                    </a>
-
+                <div class="pt-4">
                     <button
                         type="submit"
-                        class="px-5 py-3 bg-black text-white rounded-lg
+                        class="w-full px-5 py-3 bg-black text-white rounded-lg
                                text-sm font-medium
                                hover:bg-gray-800 transition">
-                        Add User
+                        Create Account
                     </button>
-
                 </div>
 
             </form>
         </div>
+
+        <p class="text-sm text-gray-500 mt-6 text-center">
+            Already have an account?
+            <a href="{{ route('login') }}" class="font-medium text-black underline">
+                Log in
+            </a>
+        </p>
 
     </main>
 

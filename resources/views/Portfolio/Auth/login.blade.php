@@ -34,6 +34,12 @@
             </p>
         </div>
 
+        @if (session('success'))
+            <div class="mb-6 border border-gray-300 bg-gray-50 px-5 py-4 text-sm font-medium">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="border border-gray-200 rounded-xl p-8">
 
             <form action="{{ route('login.store') }}"
@@ -103,6 +109,13 @@
 
             </form>
         </div>
+
+        <p class="text-sm text-gray-500 mt-6 text-center">
+            Don't have an account?
+            <a href="{{ route('register') }}" class="font-medium text-black underline">
+                Register
+            </a>
+        </p>
 
     </main>
 

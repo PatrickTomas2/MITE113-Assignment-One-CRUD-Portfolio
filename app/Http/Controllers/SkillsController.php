@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Skills;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class SkillsController extends Controller
@@ -21,9 +20,7 @@ class SkillsController extends Controller
      */
     public function create()
     {
-        return view('Portfolio.Skills.create', [
-            'users' => User::all(),
-        ]);
+        return view('Portfolio.Skills.create');
     }
 
     /**
@@ -32,13 +29,12 @@ class SkillsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'skill_name' => 'required|string|max:255',
             'skill_category' => 'required|string|max:255',
             'proficiency_level' => 'required|string|max:255',
         ]);
 
-        Skills::create($validatedData);
+        $request->user()->skills()->create($validatedData);
 
         return redirect()->route('portfolio.index')->with('success', 'Skill created successfully.');
     }
@@ -56,8 +52,9 @@ class SkillsController extends Controller
      */
     public function edit(Skills $skills)
     {
+        abort_if($skills->user_id !== auth()->id(), 403);
+
         return view('Portfolio.Skills.edit', [
-            'users' => User::all(),
             'skill' => $skills,
         ]);
     }
@@ -67,8 +64,9 @@ class SkillsController extends Controller
      */
     public function update(Request $request, Skills $skills)
     {
+        abort_if($skills->user_id !== auth()->id(), 403);
+
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'skill_name' => 'required|string|max:255',
             'skill_category' => 'required|string|max:255',
             'proficiency_level' => 'required|string|max:255',
@@ -84,6 +82,8 @@ class SkillsController extends Controller
      */
     public function destroy(Skills $skills)
     {
+        abort_if($skills->user_id !== auth()->id(), 403);
+
         $skills->delete();
         return redirect()->route('portfolio.index')->with('success', 'Skill deleted successfully.');
     }

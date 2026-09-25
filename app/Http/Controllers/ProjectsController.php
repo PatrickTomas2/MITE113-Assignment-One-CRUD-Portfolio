@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projects;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -21,9 +20,7 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        return view('Portfolio.Projects.create', [
-            'users' => User::all(),
-        ]);
+        return view('Portfolio.Projects.create');
     }
 
     /**
@@ -32,14 +29,13 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'project_name' => 'required|string|max:255',
             'project_description' => 'required|string',
             'category' => 'required|string|max:255',
             'technologies_used' => 'required|string|max:255',
         ]);
 
-        Projects::create($validatedData);
+        $request->user()->projects()->create($validatedData);
 
         return redirect()->route('portfolio.index')->with('success', 'Project created successfully.');
     }
@@ -57,8 +53,9 @@ class ProjectsController extends Controller
      */
     public function edit(Projects $projects)
     {
+        abort_if($projects->user_id !== auth()->id(), 403);
+
         return view('Portfolio.Projects.edit', [
-            'users' => User::all(),
             'project' => $projects,
         ]);
     }
@@ -68,8 +65,9 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Projects $projects)
     {
+        abort_if($projects->user_id !== auth()->id(), 403);
+
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'project_name' => 'required|string|max:255',
             'project_description' => 'required|string',
             'category' => 'required|string|max:255',
@@ -86,6 +84,8 @@ class ProjectsController extends Controller
      */
     public function destroy(Projects $projects)
     {
+        abort_if($projects->user_id !== auth()->id(), 403);
+
         $projects->delete();
 
         return redirect()->route('portfolio.index')->with('success', 'Project deleted successfully.');
